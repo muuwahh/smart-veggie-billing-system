@@ -1,48 +1,40 @@
-import React, { useState } from "react";
+import React from "react";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import Scanning from "./pages/Scanning";
+import Billing from "./pages/Billing";
+import Payment from "./pages/Payment";
 
 function App() {
-  const [item, setItem] = useState("");
-  const [weight, setWeight] = useState("");
-  const [price, setPrice] = useState("");
-  const [total, setTotal] = useState(0);
-
-  const calculateTotal = () => {
-    const result = weight * price;
-    setTotal(result);
-  };
-
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h1>🥬 Veggie Billing App</h1>
+    <BrowserRouter>
+      <div className="d-flex">
 
-      <input
-        type="text"
-        placeholder="Item"
-        value={item}
-        onChange={(e) => setItem(e.target.value)}
-      />
-      <br /><br />
+        {/* Sidebar */}
+        <div className="bg-dark text-white p-3 vh-100" style={{ width: "250px" }}>
+          <h4 className="mb-4">Dashboard</h4>
 
-      <input
-        type="number"
-        placeholder="Weight (kg)"
-        value={weight}
-        onChange={(e) => setWeight(e.target.value)}
-      />
-      <br /><br />
+          <Link to="/" className="nav-link text-white">Live Billing</Link>
+          <Link to="/billing" className="nav-link text-white">Billing</Link>
+          <Link to="/payment" className="nav-link text-white">Payment</Link>
 
-      <input
-        type="number"
-        placeholder="Price per kg"
-        value={price}
-        onChange={(e) => setPrice(e.target.value)}
-      />
-      <br /><br />
+          <hr className="bg-light" />
 
-      <button onClick={calculateTotal}>Calculate</button>
+          <h6>Devices</h6>
+          <p className="small">Scale Sensor: Online</p>
+          <p className="small">Camera: Online</p>
+        </div>
 
-      <h2>Total: ₹{total}</h2>
-    </div>
+        {/* Main */}
+        <div className="flex-grow-1 p-4 bg-light">
+          <Routes>
+            <Route path="/" element={<Scanning />} />
+            <Route path="/billing" element={<Billing />} />
+            <Route path="/payment" element={<Payment />} />
+          </Routes>
+        </div>
+
+      </div>
+    </BrowserRouter>
   );
 }
 
